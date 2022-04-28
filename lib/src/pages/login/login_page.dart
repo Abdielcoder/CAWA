@@ -53,8 +53,8 @@ class _LoginPageState extends State<LoginPage> {
             'email': _currentUser.email,
             'phone': '0000000000',
             'password': 'null',
-            'session_token': 'JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJlbWFpbCI6InJlZHNrdWxsY29kZXJAZ21haWwuY29tIiwiaWF0IjoxNjUwNjgxNzEwfQ.A5JfaJn4R5CJ3i0MQCwiWOue47BdUG78B1Ygc2ixz0c',
-            'notificationToken':'null',
+            'session_token': 'JWT WOue47BdUG78B1Ygc2ixz0c',
+            'notificationToken':'JWT',
             'image':_currentUser.photoUrl,
 
           };
