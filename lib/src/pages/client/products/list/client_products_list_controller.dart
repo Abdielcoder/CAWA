@@ -143,6 +143,10 @@ class ClientProductsListController {
     Navigator.pushNamed(context, 'client/update');
   }
 
+  void goToCreateCar() {
+    Navigator.pushNamed(context, 'client/create/car');
+  }
+
   void goToOrdersList() {
     Navigator.pushNamed(context, 'client/orders/list');
   }

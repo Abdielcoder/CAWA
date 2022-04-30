@@ -320,6 +320,11 @@ class _ClientProductsListPageState extends State<ClientProductsListPage> {
             trailing: Icon(Icons.edit_outlined),
           ),
           ListTile(
+            onTap: _con.goToCreateCar,
+            title: Text('Agregar Vehículo'),
+            trailing: Icon(Icons.airport_shuttle),
+          ),
+          ListTile(
             onTap: _con.goToOrdersList,
             title: Text('Mis servicios'),
             trailing: Icon(Icons.shopping_cart_outlined),

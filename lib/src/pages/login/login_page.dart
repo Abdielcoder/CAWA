@@ -34,7 +34,12 @@ class _LoginPageState extends State<LoginPage> {
   ProgressDialog _progressDialog;
   LoginController _con = new LoginController();
   SharedPref _sharedPref = new SharedPref();
+  //GENERETED ALEATORI ID SESSION.
+
   void initState() {
+    int automaticId = DateTime.now().millisecondsSinceEpoch;
+    String automaticIdString = automaticId.toString();
+    print("session id : ${automaticIdString}");
     usersProvider.init(context);
     _progressDialog = ProgressDialog();
     _googleSignIn.onCurrentUserChanged.listen((account) {
@@ -51,10 +56,10 @@ class _LoginPageState extends State<LoginPage> {
             'name': _currentUser.displayName,
             'lastname':_currentUser.displayName,
             'email': _currentUser.email,
-            'phone': '0000000000',
+            'phone': '',
             'password': 'null',
-            'session_token': 'JWT WOue47BdUG78B1Ygc2ixz0c',
-            'notificationToken':'JWT',
+            'session_token': 'JWT ${automaticIdString}',
+            // 'notificationToken':'',
             'image':_currentUser.photoUrl,
 
           };
@@ -97,16 +102,16 @@ class _LoginPageState extends State<LoginPage> {
           width: double.infinity,
           child: Stack(
             children: [
-              Positioned(
-                  top: -80,
-                  left: -100,
-                  child: _circleLogin()
-              ),
-              Positioned(
-                child: _textLogin(),
-                top: 60,
-                left: 25,
-              ),
+              // Positioned(
+              //     top: -80,
+              //     left: -100,
+              //     child: _circleLogin()
+              // ),
+              // Positioned(
+              //   child: _textLogin(),
+              //   top: 60,
+              //   left: 25,
+              // ),
               SingleChildScrollView(
                 child: Column(
                   children: [
@@ -116,6 +121,7 @@ class _LoginPageState extends State<LoginPage> {
                     _textFieldPassword(),
                     _buttonLogin(),
                      _buttonLoginGoogle(),
+                    _buttonLoginFacebook(),
                     _textDontHaveAccount()
                   ],
                 ),
@@ -185,10 +191,15 @@ class _LoginPageState extends State<LoginPage> {
   Widget _buttonLogin() {
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.symmetric(horizontal: 50, vertical: 10),
-      child: ElevatedButton(
-        onPressed: _con.login,
-        child: Text('INGRESA'),
+      margin: EdgeInsets.only(top: 20, bottom: 50,right: 50,left: 50),
+      child: ElevatedButton.icon(
+        onPressed: loginGoogle,
+        icon: Image.asset( // <-- Icon
+          'assets/img/mail_logo.png',
+          width: 72,
+          height: 28,
+        ),
+        label: Text('INGRESA'), //
         style: ElevatedButton.styleFrom(
             primary: MyColors.primaryColor,
             shape: RoundedRectangleBorder(
@@ -217,6 +228,30 @@ class _LoginPageState extends State<LoginPage> {
                 borderRadius: BorderRadius.circular(30)
             ),
             padding: EdgeInsets.symmetric(vertical: 7)
+        ),
+      ),
+    );
+  }
+  Widget _buttonLoginFacebook() {
+    return Container(
+      width: double.infinity,
+      margin: EdgeInsets.symmetric(horizontal: 50, vertical: 0),
+      padding: EdgeInsets.only(bottom: 40),
+      child: ElevatedButton.icon(
+        onPressed: loginFacebook,
+        icon: Image.asset( // <-- Icon
+          'assets/img/facebook_logo.png',
+          width: 60,
+          height: 42,
+        ),
+        label: Text('INGRESA'), //
+        style: ElevatedButton.styleFrom(
+            primary: MyColors.primaryColor,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30)
+            ),
+            padding: EdgeInsets.symmetric(vertical: 6),
+
         ),
       ),
     );
@@ -288,7 +323,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget _imageBanner() {
     return Container(
       margin: EdgeInsets.only(
-          top: 180,
+          top: 50,
           bottom: MediaQuery.of(context).size.height * 0.0
       ),
       child: Image.asset(
@@ -307,6 +342,11 @@ class _LoginPageState extends State<LoginPage> {
       print('Error en sesion con Google : $e');
     }
   }
+
+  Future<void> loginFacebook()async{
+
+  }
+
 
   //INSERT USER WHEN USER IS SOCIAL LOGIN
    InsertaGoogleBD(email,name,lastname,phone,password,imageFile)async {

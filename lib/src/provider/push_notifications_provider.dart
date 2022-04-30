@@ -93,6 +93,7 @@ class PushNotificationsProvider {
 
   void saveToken(User user, BuildContext context) async {
     String token = await FirebaseMessaging.instance.getToken();
+    print('tok3ns save : ${token}');
     UsersProvider usersProvider = new UsersProvider();
     usersProvider.init(context,sessionUser: user);
     usersProvider.updateNotificationToken(user.id, token);
