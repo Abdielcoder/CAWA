@@ -9,5 +9,8 @@ class MyColors {
   static Color colorAmarrillo = Color(0xFFF0A500);
   static Color colorNaranja = Color(0xFFE45826);
   static Color colorGoogle = Color(0xFFea4335);
+  static Color colorAqua= Color(0xFF00968A);
+  static Color colorMorado= Color(0xFF9C6FA1);
+
 
 }

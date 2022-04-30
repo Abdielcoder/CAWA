@@ -17,15 +17,7 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
 
   ClientCarCreateController _con = new ClientCarCreateController();
   Color currentColor = Colors.limeAccent;
-  // List<DropdownMenuItem<String>> get dropdownItems{
-  //   List<DropdownMenuItem<String>> menuItems = [
-  //     DropdownMenuItem(child: Text("USA"),value: "USA"),
-  //     DropdownMenuItem(child: Text("Canada"),value: "Canada"),
-  //     DropdownMenuItem(child: Text("Brazil"),value: "Brazil"),
-  //     DropdownMenuItem(child: Text("England"),value: "England"),
-  //   ];
-  //   return menuItems;
-  // }
+
   String dropdownValue = 'Año';
   void changeColor(Color color) => setState(() => currentColor = color);
   @override
@@ -41,28 +33,40 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Nueva categoria'),
+    return Container(
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: [Colors.blue.shade900, Colors.cyan.shade900])
       ),
-      body: Column(
-        children: [
-          SizedBox(height: 30),
-          _imageUser(),
-          SizedBox(height: 30),
-          _marcaModelo(),
-          SizedBox(height: 30),
-          _yearDescripcion(),
-          SizedBox(height: 30),
-          _placa(),
-          SizedBox(height: 30),
-          _changeColor()
-        ],
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          title: Text('Agrega un auto'),
+        ),
+        body: Column(
+          children: [
+            SizedBox(height: 10),
+            _imageUser(),
+            SizedBox(height: 10),
+            _marcaModelo(),
+            SizedBox(height: 10),
+            _yearDescripcion(),
+            SizedBox(height: 10),
+            _placa(),
+            SizedBox(height: 10),
+            _changeColor(),
+            SizedBox(height: 20),
+            _imageCar()
+          ],
 
+        ),
+
+
+        bottomNavigationBar: _buttonCreate(),
       ),
-
-
-      bottomNavigationBar: _buttonCreate(),
     );
   }
 
@@ -146,9 +150,9 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
                 },
               );
             },
-            child: const Text('Change me'),
-            color: currentColor,
-            textColor: Colors.black54
+            child: const Text('Selecciona color'),
+            color: MyColors.primaryColor,
+            textColor: Colors.white
         ),
       ],
     );
@@ -166,12 +170,23 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
       ),
     );
   }
+  Widget _imageCar() {
+    return GestureDetector(
+      onTap: (){},
+      child: CircleAvatar(
+        backgroundImage:
+        AssetImage('assets/img/car_color.png'),
+        radius: 50,
+          backgroundColor: currentColor,
+      ),
+    );
+  }
 
   Widget _textFieldName() {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       decoration: BoxDecoration(
-          color: MyColors.primaryOpacityColor,
+          color: Colors.white,
           borderRadius: BorderRadius.circular(30)
       ),
       child: TextField(
@@ -199,8 +214,7 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
       padding: EdgeInsets.symmetric(horizontal: 195),
       margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       decoration: BoxDecoration(
-
-          color: MyColors.primaryOpacityColor,
+          color: Colors.white,
           borderRadius: BorderRadius.circular(30)
       ),
       child:DropdownButton<String>(
@@ -241,7 +255,7 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
       padding: EdgeInsets.symmetric(horizontal: 180),
       margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       decoration: BoxDecoration(
-          color: MyColors.primaryOpacityColor,
+          color: Colors.white,
           borderRadius: BorderRadius.circular(30)
       ),
       child: TextField(
@@ -295,7 +309,7 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       decoration: BoxDecoration(
-          color: MyColors.primaryOpacityColor,
+          color: Colors.white,
           borderRadius: BorderRadius.circular(30)
       ),
       child: TextField(
@@ -319,18 +333,25 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
 
   Widget _buttonCreate() {
     return Container(
-      height: 50,
+      height:70,
       width: double.infinity,
-      margin: EdgeInsets.symmetric(horizontal: 50, vertical: 30),
+      margin: EdgeInsets.symmetric(horizontal: 135, vertical: 40),
       child: ElevatedButton(
         onPressed: _con.createCategory,
-        child: Text('Crear categoria'),
+        child: Text('Agregar Auto',
+        style: TextStyle(
+          fontSize: 17.0,
+          color: Colors.white
+        ),),
         style: ElevatedButton.styleFrom(
+
+          onPrimary: Colors.black,
             primary: MyColors.primaryColor,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30)
             ),
-            padding: EdgeInsets.symmetric(vertical: 15)
+            padding: EdgeInsets.symmetric(vertical: 5),
+
         ),
       ),
     );
