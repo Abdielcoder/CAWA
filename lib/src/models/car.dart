@@ -12,6 +12,7 @@ class Car{
   String id;
   String marca;
   String modelo;
+  String year;
   String placa;
   String color;
   List<Car> toList = [];
@@ -20,6 +21,7 @@ class Car{
     this.id,
     this.marca,
     this.modelo,
+    this.year,
     this.placa,
     this.color
   });
@@ -28,6 +30,7 @@ class Car{
     id: json["id"] is int ? json["id"].toString() : json['id'],
     marca: json["name"],
     modelo: json["modelo"],
+    year: json["year"],
     placa: json["placa"],
     color: json["color"],
   );
@@ -44,10 +47,8 @@ class Car{
     "id": id,
     "name": marca,
     "modelo": modelo,
+    "year": year,
     "placa": placa,
-    "color": placa,
+    "color": color,
   };
-
-
-
 }

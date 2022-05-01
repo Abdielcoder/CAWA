@@ -6,6 +6,7 @@ import 'package:uber_clone_flutter/src/models/category.dart';
 import 'package:uber_clone_flutter/src/models/response_api.dart';
 
 import 'package:uber_clone_flutter/src/models/user.dart';
+import 'package:uber_clone_flutter/src/provider/car_provider.dart';
 import 'package:uber_clone_flutter/src/provider/categories_provider.dart';
 import 'package:uber_clone_flutter/src/utils/my_snackbar.dart';
 import 'package:uber_clone_flutter/src/utils/shared_pref.dart';
@@ -38,10 +39,10 @@ class ClientCarCreateController {
   TextEditingController marcaController = new TextEditingController();
   TextEditingController modeloController = new TextEditingController();
   TextEditingController placaController = new TextEditingController();
-  DropdownButton  yearCar = new DropdownButton();
-
   PickedFile pickedFile;
-  // CategoriesProvider _categoriesProvider = new CategoriesProvider();
+
+
+  CarProvider _carProvider = new CarProvider();
   User user;
   SharedPref sharedPref = new SharedPref();
   File imageFile;
@@ -60,27 +61,23 @@ class ClientCarCreateController {
     String modelo = modeloController.text;
     String placa = placaController.text;
 
-    print("Marca del vehículo : ${marca}");
-    print("Módelo del vehículo : ${modelo}");
-    print("Placa del vehículo : ${placa}");
-
     //VALIDATED INFO
     if (marca.isEmpty || modelo.isEmpty || placa.isEmpty) {
       MySnackbar.show(context, 'Debe ingresar todos los campos');
       return;
     }
 
-
     //CREATE OBJECT FROM INPUTS
    Car mycar = new Car(
      marca: marca,
      modelo: modelo,
+     year: selectedValue,
      placa: placa,
+     color: cadenaColorHex
    );
 
-/*
     //SEND DATA TO API
-    ResponseApi responseApi = await _categoriesProvider.create(mycar);
+    ResponseApi responseApi = await _carProvider.create(mycar);
     //GET RESPONSE FROM SERVER API
     MySnackbar.show(context, responseApi.message);
     //IF RESPONSE IS SUCCESS CLEAR INPUTS
@@ -89,7 +86,7 @@ class ClientCarCreateController {
       modeloController.text = '';
       placaController.text = '';
     }
-*/
+
 
   }
 
