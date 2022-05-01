@@ -13,6 +13,19 @@ import 'package:uber_clone_flutter/src/utils/shared_pref.dart';
 import '../../../models/car.dart';
 
 class ClientCarCreateController {
+
+  String selectedValue;
+
+  var language = <String>['English', 'Espanol'];
+
+  void onSelected(String value) {
+    selectedValue = value;
+
+
+    print(selectedValue);
+  }
+
+
   //CONTEX APP
   BuildContext context;
   Function refresh;
@@ -20,6 +33,8 @@ class ClientCarCreateController {
   TextEditingController marcaController = new TextEditingController();
   TextEditingController modeloController = new TextEditingController();
   TextEditingController placaController = new TextEditingController();
+  DropdownButton  yearCar = new DropdownButton();
+
   PickedFile pickedFile;
   // CategoriesProvider _categoriesProvider = new CategoriesProvider();
   User user;
@@ -39,6 +54,11 @@ class ClientCarCreateController {
     String marca = marcaController.text;
     String modelo = modeloController.text;
     String placa = placaController.text;
+
+    print("Marca del vehículo : ${marca}");
+    print("Módelo del vehículo : ${modelo}");
+    print("Placa del vehículo : ${placa}");
+
     //VALIDATED INFO
     if (marca.isEmpty || modelo.isEmpty || placa.isEmpty) {
       MySnackbar.show(context, 'Debe ingresar todos los campos');
@@ -65,6 +85,7 @@ class ClientCarCreateController {
       placaController.text = '';
     }
 */
+
   }
 
   //IMG FROM GALLERY OR CAMERA

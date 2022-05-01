@@ -4,6 +4,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:uber_clone_flutter/src/pages/client/create/client_car_create_controller.dart';
 import 'package:uber_clone_flutter/src/utils/my_colors.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 
 class CLientCarCreatePage extends StatefulWidget {
   const CLientCarCreatePage({Key key}) : super(key: key);
@@ -20,6 +21,7 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
   String dropdownValue = 'Año';
   //SET COLOR TO CURRENT COLOR
   void changeColor(Color color) => setState(() => currentColor = color);
+
   @override
   void initState() {
 
@@ -108,6 +110,7 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
       ],
     );
   }
+
 
   Widget _changeColor(){
     return Container(
@@ -220,6 +223,7 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
   Widget _textFieldYear() {
 
     return Container(
+
       alignment: Alignment.center,
       padding: EdgeInsets.symmetric(horizontal: 179),
       margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -227,34 +231,42 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
           color: Colors.white,
           borderRadius: BorderRadius.circular(30)
       ),
-      child:DropdownButton<String>(
-        isExpanded: true,
-        value: dropdownValue,
-        alignment: Alignment.center,
-        icon: const Icon(Icons.arrow_downward),
-        elevation: 16,
-        style: const TextStyle(
+      child:DropdownSearch<String>(
+        popupBackgroundColor: Colors.grey[200],
+        mode: Mode.MENU,
 
-            color: Colors.black,
-            fontSize: 17,
-            fontWeight: FontWeight.bold),
-        underline: Container(
+        showSelectedItems: true,
+          items: <String>['AÑO', '2022', '2021', '2020','2019','2018','2017','2016','2015'
+          ,'2014','2013','2012','2011','2010','2009','2008','2007','2006','2005','2004',
+          '2003','2002','2001','2000','1999','1998','1997','1996','1995','1994','1993',
+            '1992','1991','1990','1989','1988','1987','1986','1985','1984','1983','1982',
+          '1981','1980','1979','1978','1977','1976','1975','1974','1973','1972','1971',
+          '1970','1969','1968','1967','1966','1965','1964','1963','1962','1961','1960',
+          '1959','1958','1957','1956','1955','1954','1953','1952','1951','1950','OTRO'],
 
-          height: 2,
-          color: Colors.deepPurpleAccent,
-        ),
+        dropdownSearchDecoration: InputDecoration(
+        labelText: "Selecciona Año",
+        hintText: "AÑo",
+
+          fillColor: Colors.white,
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.white),
+          ),
+      ),
+
         onChanged: (String newValue) {
           setState(() {
+            _con.onSelected(newValue);
             dropdownValue = newValue;
           });
         },
-        items: <String>['Año', '2022', '2021', '2020']
-            .map<DropdownMenuItem<String>>((String value) {
-          return DropdownMenuItem<String>(
-            value: value,
-            child: Text(value),
-          );
-        }).toList(),
+        selectedItem: "Año",
+        //     .map<DropdownMenuItem<String>>((String value) {
+        //   return DropdownMenuItem<String>(
+        //     value: value,
+        //     child: Text(value),
+        //   );
+        // }).toList(),
       )
 
         );
@@ -286,6 +298,7 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
       ),
     );
   }
+
 
   // Widget _textFieldDescription() {
   //   return Container(
@@ -347,7 +360,7 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
       width: double.infinity,
       margin: EdgeInsets.symmetric(horizontal: 135, vertical: 40),
       child: ElevatedButton(
-        onPressed: _con.createCategory,
+        onPressed: _con.createCar,
         child: Text('Agregar Auto',
         style: TextStyle(
           fontSize: 17.0,
