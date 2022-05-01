@@ -33,6 +33,7 @@ class CarProvider {
       Uri url = Uri.http(_url, '$_api/create');
       //DATA FROM JSON OBJECT
       String bodyParams = json.encode(car);
+      print("Body Param OBjeto mycar : ${bodyParams}");
       //SEND HEADERS
       Map<String, String> headers = {
         'Content-type': 'application/json'

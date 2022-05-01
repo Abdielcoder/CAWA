@@ -49,7 +49,7 @@ class Car{
   Map<String, dynamic> toJson() => {
     "id": id,
     "id_user": id_user,
-    "name": marca,
+    "marca": marca,
     "modelo": modelo,
     "year": year,
     "placa": placa,

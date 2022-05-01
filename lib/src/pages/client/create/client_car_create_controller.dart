@@ -72,7 +72,7 @@ class ClientCarCreateController {
     //CREATE OBJECT FROM INPUTS
    Car mycar = new Car(
      id_user: user.id,
-     marca: "marca",
+     marca: marca,
      modelo: modelo,
      year: selectedValue,
      placa: placa,
@@ -80,16 +80,17 @@ class ClientCarCreateController {
 
    );
 
+    print("Objeto Mycar : ${mycar}");
     //SEND DATA TO API
     ResponseApi responseApi = await _carProvider.create(mycar);
     //GET RESPONSE FROM SERVER API
     MySnackbar.show(context, responseApi.message);
     //IF RESPONSE IS SUCCESS CLEAR INPUTS
-    if (responseApi.success) {
-      marcaController.text = '';
-      modeloController.text = '';
-      placaController.text = '';
-    }
+    // if (responseApi.success) {
+    //   marcaController.text = '';
+    //   modeloController.text = '';
+    //   placaController.text = '';
+    // }
 
 
   }
