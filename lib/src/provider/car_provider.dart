@@ -35,8 +35,7 @@ class CarProvider {
       String bodyParams = json.encode(car);
       //SEND HEADERS
       Map<String, String> headers = {
-        'Content-type': 'application/json',
-        'Authorization': sessionUser.sessionToken
+        'Content-type': 'application/json'
       };
       //SEND PETTITION
       final res = await http.post(url, headers: headers, body: bodyParams);

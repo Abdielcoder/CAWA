@@ -12,6 +12,7 @@ import 'package:uber_clone_flutter/src/utils/my_snackbar.dart';
 import 'package:uber_clone_flutter/src/utils/shared_pref.dart';
 
 import '../../../models/car.dart';
+import '../../../provider/users_provider.dart';
 
 class ClientCarCreateController {
 
@@ -44,6 +45,7 @@ class ClientCarCreateController {
 
   CarProvider _carProvider = new CarProvider();
   User user;
+  UsersProvider usersProvider = new UsersProvider();
   SharedPref sharedPref = new SharedPref();
   File imageFile;
 
@@ -51,7 +53,7 @@ class ClientCarCreateController {
     this.context = context;
     this.refresh = refresh;
     user = User.fromJson(await sharedPref.read('user'));
-    // _categoriesProvider.init(context, user);
+    usersProvider.init(context, sessionUser: user);
   }
 
 
@@ -69,7 +71,8 @@ class ClientCarCreateController {
 
     //CREATE OBJECT FROM INPUTS
    Car mycar = new Car(
-     marca: marca,
+     id_user: user.id,
+     marca: "marca",
      modelo: modelo,
      year: selectedValue,
      placa: placa,

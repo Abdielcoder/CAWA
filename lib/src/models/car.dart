@@ -10,6 +10,7 @@ String categoryToJson(Car data) => json.encode(data.toJson());
 class Car{
 
   String id;
+  String id_user;
   String marca;
   String modelo;
   String year;
@@ -19,6 +20,7 @@ class Car{
 
   Car({
     this.id,
+    this.id_user,
     this.marca,
     this.modelo,
     this.year,
@@ -28,6 +30,7 @@ class Car{
 
   factory Car.fromJson(Map<String, dynamic> json) => Car(
     id: json["id"] is int ? json["id"].toString() : json['id'],
+    id_user: json["id_user"] is int ? json["id_user"].toString() : json['id_user'],
     marca: json["name"],
     modelo: json["modelo"],
     year: json["year"],
@@ -45,6 +48,7 @@ class Car{
 
   Map<String, dynamic> toJson() => {
     "id": id,
+    "id_user": id_user,
     "name": marca,
     "modelo": modelo,
     "year": year,
