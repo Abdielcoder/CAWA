@@ -20,13 +20,21 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
   Color currentColor = Colors.limeAccent;
   String dropdownValue = 'Año';
   //SET COLOR TO CURRENT COLOR
-  void changeColor(Color color) => setState(() => currentColor = color);
-
+  //void changeColor(Color color) => setState(() => currentColor = color);
+  void setStateColor(Color color){
+    setState(() {
+      currentColor = color;
+      //_con.selectedCarColor =currentColor.toString();
+      _con.onSelectedColor(currentColor.toString());
+    });
+  }
   @override
   void initState() {
 
     // TODO: implement initState
     super.initState();
+
+
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
       _con.init(context, refresh);
     });
@@ -142,7 +150,7 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
                     content: SingleChildScrollView(
                       child: ColorPicker(
                         pickerColor: currentColor,
-                        onColorChanged: changeColor,
+                        onColorChanged: setStateColor,
                         colorPickerWidth: 300.0,
                         pickerAreaHeightPercent: 0.2,
                         enableAlpha: true,
@@ -191,6 +199,7 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
         AssetImage('assets/img/car_color.png'),
         radius: 50,
           backgroundColor: currentColor,
+
       ),
     );
   }
@@ -261,12 +270,6 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
           });
         },
         selectedItem: "Año",
-        //     .map<DropdownMenuItem<String>>((String value) {
-        //   return DropdownMenuItem<String>(
-        //     value: value,
-        //     child: Text(value),
-        //   );
-        // }).toList(),
       )
 
         );
@@ -298,35 +301,6 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
       ),
     );
   }
-
-
-  // Widget _textFieldDescription() {
-  //   return Container(
-  //     margin: EdgeInsets.symmetric(horizontal: 50, vertical: 5),
-  //     padding: EdgeInsets.all(10),
-  //     decoration: BoxDecoration(
-  //         color: MyColors.primaryOpacityColor,
-  //         borderRadius: BorderRadius.circular(30)
-  //     ),
-  //     child: TextField(
-  //       controller: _con.descriptionController,
-  //       maxLines: 3,
-  //       maxLength: 255,
-  //       decoration: InputDecoration(
-  //           hintText: 'Descripcion de la categoria',
-  //           border: InputBorder.none,
-  //           contentPadding: EdgeInsets.all(15),
-  //           hintStyle: TextStyle(
-  //               color: MyColors.primaryColorDark
-  //           ),
-  //           suffixIcon: Icon(
-  //             Icons.description,
-  //             color: MyColors.primaryColor,
-  //           ),
-  //       ),
-  //     ),
-  //   );
-  // }
 
   Widget _textFieldModelo() {
     return Container(

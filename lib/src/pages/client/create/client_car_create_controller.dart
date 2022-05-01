@@ -15,8 +15,8 @@ import '../../../models/car.dart';
 class ClientCarCreateController {
 
   String selectedValue;
-
-  var language = <String>['English', 'Espanol'];
+  String selectedCarColor;
+  String cadenaColorHex;
 
   void onSelected(String value) {
     selectedValue = value;
@@ -25,6 +25,11 @@ class ClientCarCreateController {
     print(selectedValue);
   }
 
+  void onSelectedColor(String carColor){
+    selectedCarColor = carColor;
+    cadenaColorHex = selectedCarColor.substring(10,16);
+    print("Current Color State : ${cadenaColorHex}");
+  }
 
   //CONTEX APP
   BuildContext context;
