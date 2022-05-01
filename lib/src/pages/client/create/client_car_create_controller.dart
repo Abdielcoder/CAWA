@@ -10,15 +10,18 @@ import 'package:uber_clone_flutter/src/provider/categories_provider.dart';
 import 'package:uber_clone_flutter/src/utils/my_snackbar.dart';
 import 'package:uber_clone_flutter/src/utils/shared_pref.dart';
 
-class ClientCarCreateController {
+import '../../../models/car.dart';
 
+class ClientCarCreateController {
+  //CONTEX APP
   BuildContext context;
   Function refresh;
-
-  TextEditingController nameController = new TextEditingController();
-  TextEditingController descriptionController = new TextEditingController();
+  //INPUTS
+  TextEditingController marcaController = new TextEditingController();
+  TextEditingController modeloController = new TextEditingController();
+  TextEditingController placaController = new TextEditingController();
   PickedFile pickedFile;
-  CategoriesProvider _categoriesProvider = new CategoriesProvider();
+  // CategoriesProvider _categoriesProvider = new CategoriesProvider();
   User user;
   SharedPref sharedPref = new SharedPref();
   File imageFile;
@@ -27,38 +30,46 @@ class ClientCarCreateController {
     this.context = context;
     this.refresh = refresh;
     user = User.fromJson(await sharedPref.read('user'));
-    _categoriesProvider.init(context, user);
+    // _categoriesProvider.init(context, user);
   }
 
-  void createCategory() async {
-    String name = nameController.text;
-    String description = descriptionController.text;
 
-    if (name.isEmpty || description.isEmpty) {
+  void createCar() async {
+    //GET DATA FROM INPUTS
+    String marca = marcaController.text;
+    String modelo = modeloController.text;
+    String placa = placaController.text;
+    //VALIDATED INFO
+    if (marca.isEmpty || modelo.isEmpty || placa.isEmpty) {
       MySnackbar.show(context, 'Debe ingresar todos los campos');
       return;
     }
 
 
-
-   Category mycategory = new Category(
-     name: name,
-     description: description
+    //CREATE OBJECT FROM INPUTS
+   Car mycar = new Car(
+     marca: marca,
+     modelo: modelo,
+     placa: placa,
    );
 
-
-    ResponseApi responseApi = await _categoriesProvider.create(mycategory);
-
+/*
+    //SEND DATA TO API
+    ResponseApi responseApi = await _categoriesProvider.create(mycar);
+    //GET RESPONSE FROM SERVER API
     MySnackbar.show(context, responseApi.message);
-
+    //IF RESPONSE IS SUCCESS CLEAR INPUTS
     if (responseApi.success) {
-      nameController.text = '';
-      descriptionController.text = '';
+      marcaController.text = '';
+      modeloController.text = '';
+      placaController.text = '';
     }
-
+*/
   }
 
+  //IMG FROM GALLERY OR CAMERA
   Future selectImage(ImageSource imageSource) async {
+    //DEFINE SOURCE
     pickedFile = await ImagePicker().getImage(source: imageSource);
     if (pickedFile != null) {
       imageFile = File(pickedFile.path);
@@ -66,6 +77,8 @@ class ClientCarCreateController {
     Navigator.pop(context);
     refresh();
   }
+
+  //DIALOG TO PICK UP OR TAKE PHOTO
   void showAlertDialog() {
     Widget galleryButton = ElevatedButton(
         onPressed: () {

@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:uber_clone_flutter/src/pages/client/create/client_car_create_controller.dart';
-import 'package:uber_clone_flutter/src/pages/restaurant/categories/create/restaurant_categories_create_controller.dart';
 import 'package:uber_clone_flutter/src/utils/my_colors.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
@@ -16,13 +15,13 @@ class CLientCarCreatePage extends StatefulWidget {
 class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
 
   ClientCarCreateController _con = new ClientCarCreateController();
+  //DEFAULT CAR COLOR
   Color currentColor = Colors.limeAccent;
-
   String dropdownValue = 'Año';
+  //SET COLOR TO CURRENT COLOR
   void changeColor(Color color) => setState(() => currentColor = color);
   @override
   void initState() {
-
 
     // TODO: implement initState
     super.initState();
@@ -33,7 +32,7 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Container(//BODY BACKGROUND COLOR
       decoration: BoxDecoration(
           gradient: LinearGradient(
               begin: Alignment.centerLeft,
@@ -41,6 +40,8 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
               colors: [Colors.blue.shade900, Colors.cyan.shade900])
       ),
       child: Scaffold(
+        //Bottom overflowed by x pixels when showing keyboard
+        resizeToAvoidBottomInset : false,
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
@@ -48,17 +49,17 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
         ),
         body: Column(
           children: [
-            SizedBox(height: 10),
+
             _imageUser(),
-            SizedBox(height: 10),
+
             _marcaModelo(),
-            SizedBox(height: 10),
+
             _yearDescripcion(),
-            SizedBox(height: 10),
+
             _placa(),
-            SizedBox(height: 10),
+
             _changeColor(),
-            SizedBox(height: 20),
+
             _imageCar()
           ],
 
@@ -70,20 +71,22 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
     );
   }
 
+  //TWO ELEMENTS
   Widget _marcaModelo(){
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Expanded(
-         child: _textFieldName(),
+         child: _textFieldMarca(),
         ),
         Expanded(
-          child: _textFieldDescription(),
+          child: _textFieldModelo(),
         ),
 
       ],
     );
   }
+
   Widget _yearDescripcion(){
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -107,13 +110,16 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
   }
 
   Widget _changeColor(){
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        Expanded(
-            child: _color()
-        )
-      ],
+    return Container(
+      margin: EdgeInsets.only(top: 20,bottom: 15),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Expanded(
+              child: _color()
+          )
+        ],
+      ),
     );
   }
 
@@ -122,7 +128,7 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         RaisedButton(
-            elevation: 3.0,
+            elevation: 1.0,
             onPressed: () {
               showDialog(
                 context: context,
@@ -135,7 +141,7 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
                         pickerColor: currentColor,
                         onColorChanged: changeColor,
                         colorPickerWidth: 300.0,
-                        pickerAreaHeightPercent: 0.7,
+                        pickerAreaHeightPercent: 0.2,
                         enableAlpha: true,
                         displayThumbColor: true,
                         showLabel: true,
@@ -159,14 +165,18 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
   }
 
   Widget _imageUser() {
-    return GestureDetector(
-      onTap: _con.showAlertDialog,
-      child: CircleAvatar(
-        backgroundImage: _con.imageFile != null
-            ? FileImage(_con.imageFile)
-            : AssetImage('assets/img/user_profile_2.png'),
-        radius: 60,
-        backgroundColor: Colors.grey[200],
+
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+      child: GestureDetector(
+        onTap: _con.showAlertDialog,
+        child: CircleAvatar(
+          backgroundImage: _con.imageFile != null
+              ? FileImage(_con.imageFile)
+              : AssetImage('assets/img/user_profile_2.png'),
+          radius: 60,
+          backgroundColor: Colors.grey[200],
+        ),
       ),
     );
   }
@@ -182,15 +192,15 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
     );
   }
 
-  Widget _textFieldName() {
+  Widget _textFieldMarca() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(30)
       ),
       child: TextField(
-        controller: _con.nameController,
+        controller: _con.marcaController,
         decoration: InputDecoration(
             hintText: 'Marca',
             border: InputBorder.none,
@@ -211,8 +221,8 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
 
     return Container(
       alignment: Alignment.center,
-      padding: EdgeInsets.symmetric(horizontal: 195),
-      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+      padding: EdgeInsets.symmetric(horizontal: 179),
+      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(30)
@@ -252,14 +262,14 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
   Widget _textFieldPlaca() {
     return Container(
       alignment: Alignment.center,
-      padding: EdgeInsets.symmetric(horizontal: 180),
-      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+      padding: EdgeInsets.symmetric(horizontal: 160),
+      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(30)
       ),
       child: TextField(
-        controller: _con.nameController,
+        controller: _con.placaController,
         decoration: InputDecoration(
             hintText: 'Placa',
 
@@ -305,7 +315,7 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
   //   );
   // }
 
-  Widget _textFieldDescription() {
+  Widget _textFieldModelo() {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       decoration: BoxDecoration(
@@ -313,7 +323,7 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
           borderRadius: BorderRadius.circular(30)
       ),
       child: TextField(
-        controller: _con.nameController,
+        controller: _con.modeloController,
         decoration: InputDecoration(
             hintText: 'Modelo',
             border: InputBorder.none,
