@@ -73,7 +73,8 @@ class ClientCarCreateController {
      modelo: modelo,
      year: selectedValue,
      placa: placa,
-     color: cadenaColorHex
+     color: cadenaColorHex,
+
    );
 
     //SEND DATA TO API

@@ -15,7 +15,7 @@ import '../models/car.dart';
 class CarProvider {
 
   String _url = Environment.API_DELIVERY;
-  String _api = '/api/createCar';
+  String _api = '/api/cars';
   BuildContext context;
   User sessionUser;
 

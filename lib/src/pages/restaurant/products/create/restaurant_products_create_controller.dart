@@ -23,7 +23,6 @@ class RestaurantProductsCreateController {
   TextEditingController nameController = new TextEditingController();
   TextEditingController descriptionController = new TextEditingController();
   MoneyMaskedTextController priceController = new MoneyMaskedTextController();
-
   CategoriesProvider _categoriesProvider = new CategoriesProvider();
   ProductsProvider _productsProvider = new ProductsProvider();
 

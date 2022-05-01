@@ -193,7 +193,7 @@ class _LoginPageState extends State<LoginPage> {
       width: double.infinity,
       margin: EdgeInsets.only(top: 20, bottom: 50,right: 50,left: 50),
       child: ElevatedButton.icon(
-        onPressed: loginGoogle,
+        onPressed: _con.login,
         icon: Image.asset( // <-- Icon
           'assets/img/mail_logo.png',
           width: 72,
