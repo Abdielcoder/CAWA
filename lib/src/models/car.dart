@@ -16,6 +16,7 @@ class Car{
   String year;
   String placa;
   String color;
+  String image;
   List<Car> toList = [];
 
   Car({
@@ -25,7 +26,8 @@ class Car{
     this.modelo,
     this.year,
     this.placa,
-    this.color
+    this.color,
+    this.image,
   });
 
   factory Car.fromJson(Map<String, dynamic> json) => Car(
@@ -36,6 +38,7 @@ class Car{
     year: json["year"],
     placa: json["placa"],
     color: json["color"],
+    image: json["image"],
   );
 
   Car.fromJsonList(List<dynamic> jsonList) {
@@ -54,5 +57,6 @@ class Car{
     "year": year,
     "placa": placa,
     "color": color,
+    "image": image
   };
 }

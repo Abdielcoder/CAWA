@@ -1,9 +1,10 @@
 import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
-import 'package:progress_dialog/progress_dialog.dart';
+import 'package:path/path.dart';
 import 'package:uber_clone_flutter/src/api/environment.dart';
-import 'package:uber_clone_flutter/src/models/category.dart';
 import 'package:uber_clone_flutter/src/models/response_api.dart';
 import 'package:uber_clone_flutter/src/models/user.dart';
 import 'package:uber_clone_flutter/src/utils/my_snackbar.dart';
@@ -26,7 +27,34 @@ class CarProvider {
 
   }
 
+  //CREATE CAR WITH IMAGE
+  Future<Stream> createWithImage(Car mycar, File image) async {
+    try {
+      Uri url = Uri.http(_url, '$_api/createwimage');
+      final request = http.MultipartRequest('POST', url);
+      print("La ruta de la imagen en el provider: ${image}");
+      if (image != null) {//IF IMAGE != NULL GET IMAGE AND NOW LENGTH
+        request.files.add(http.MultipartFile(
+            'image',
+            http.ByteStream(image.openRead().cast()),
+            await image.length(),
+            filename: basename(image.path)//BASE NAME
+        ));
+      }
 
+      request.fields['mycar'] = json.encode(mycar);
+      print("Body Param OBjeto mycar : ${request.fields['mycar']}");
+
+      final response = await request.send(); // ENVIARA LA PETICION
+      return response.stream.transform(utf8.decoder);
+    }
+    catch(e) {
+      print('Error de la API: $e');
+      return null;
+    }
+  }
+
+  //CREATE CAR WITH OUT IMAGE
   Future<ResponseApi> create(Car car) async {
     try {
       //FINAL URL

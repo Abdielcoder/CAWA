@@ -32,6 +32,7 @@ class RegisterController {
     _progressDialog = ProgressDialog(context: context);
   }
 
+  //REGISTER USER WITH EMAIL
   void register() async {
     String email = emailController.text.trim();
     String name = nameController.text;
@@ -40,6 +41,7 @@ class RegisterController {
     String password = passwordController.text.trim();
     String confirmPassword = confirmPassswordController.text.trim();
 
+    //VALIDATED FIELDS
     if (email.isEmpty || name.isEmpty || lastname.isEmpty || phone.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
       MySnackbar.show(context, 'Debes ingresar todos los campos');
       return;
@@ -63,6 +65,7 @@ class RegisterController {
     _progressDialog.show(max: 100, msg: 'Espere un momento...');
     isEnable = false;
 
+    //DATA OBJECT
     User user = new User(
         email: email,
         name: name,
@@ -71,6 +74,7 @@ class RegisterController {
         password: password
     );
 
+    //SEND DATA INCLUDE DE IMAGE
     Stream stream = await usersProvider.createWithImage(user, imageFile);
     stream.listen((res) {
 

@@ -1,21 +1,17 @@
+import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
-
-import 'package:uber_clone_flutter/src/models/category.dart';
 import 'package:uber_clone_flutter/src/models/response_api.dart';
-
 import 'package:uber_clone_flutter/src/models/user.dart';
 import 'package:uber_clone_flutter/src/provider/car_provider.dart';
-import 'package:uber_clone_flutter/src/provider/categories_provider.dart';
 import 'package:uber_clone_flutter/src/utils/my_snackbar.dart';
 import 'package:uber_clone_flutter/src/utils/shared_pref.dart';
-
 import '../../../models/car.dart';
 import '../../../provider/users_provider.dart';
 import '../../../utils/dialog.dart';
+
 
 class ClientCarCreateController {
 
@@ -44,13 +40,13 @@ class ClientCarCreateController {
   TextEditingController modeloController = new TextEditingController();
   TextEditingController placaController = new TextEditingController();
   PickedFile pickedFile;
-
+  File imageFile;
 
   CarProvider _carProvider = new CarProvider();
   User user;
   UsersProvider usersProvider = new UsersProvider();
   SharedPref sharedPref = new SharedPref();
-  File imageFile;
+
 
   ProgressDialog _progressDialog;
 
@@ -64,48 +60,6 @@ class ClientCarCreateController {
     usersProvider.init(context, sessionUser: user);
   }
 
-
-  void createCar() async {
-    //GET DATA FROM INPUTS
-    String marca = marcaController.text;
-    String modelo = modeloController.text;
-    String placa = placaController.text;
-
-    //VALIDATED INFO
-    if (marca.isEmpty || modelo.isEmpty || placa.isEmpty) {
-      MySnackbar.show(context, 'Debe ingresar todos los campos');
-      return;
-    }
-
-    _progressDialog.show(max: 100, msg: 'Espere un momento...');
-
-    //CREATE OBJECT FROM INPUTS
-   Car mycar = new Car(
-     id_user: user.id,
-     marca: marca,
-     modelo: modelo,
-     year: selectedValue,
-     placa: placa,
-     color: cadenaColorHex,
-
-   );
-
-    print("Objeto Mycar : ${mycar}");
-    //SEND DATA TO API
-    ResponseApi responseApi = await _carProvider.create(mycar);
-    //GET RESPONSE FROM SERVER API
-    MySnackbar.show(context, responseApi.message);
-    //IF RESPONSE IS SUCCESS CLEAR INPUTS
-    if (responseApi.success) {
-      _progressDialog.close();
-      marcaController.text = '';
-      modeloController.text = '';
-      placaController.text = '';
-      MyDialog.show(context, 'Vehículo Agregado','Tu Informacion se cargo correctamente');
-    }
-
-
-  }
 
   //IMG FROM GALLERY OR CAMERA
   Future selectImage(ImageSource imageSource) async {
@@ -150,5 +104,71 @@ class ClientCarCreateController {
     );
   }
 
+  void createCar() async {
+    //GET DATA FROM INPUTS
+    String marca = marcaController.text;
+    String modelo = modeloController.text;
+    String placa = placaController.text;
+
+    //VALIDATED INFO
+    if (marca.isEmpty || modelo.isEmpty || placa.isEmpty) {
+      MySnackbar.show(context, 'Debe ingresar todos los campos');
+      return;
+    }
+    if (imageFile == null) {
+      MySnackbar.show(context, 'Selecciona una imagen');
+      return;
+    }
+    _progressDialog.show(max: 100, msg: 'Espere un momento...');
+
+    //CREATE OBJECT FROM INPUTS
+    Car mycar = new Car(
+      id_user: user.id,
+      marca: marca,
+      modelo: modelo,
+      year: selectedValue,
+      placa: placa,
+      color: cadenaColorHex,
+
+    );
+
+
+    print('La ruta de la imagen en el controller: ${imageFile}');
+    //SEND DATA INCLUDE DE IMAGE
+    Stream stream = await _carProvider.createWithImage(mycar, imageFile);
+    stream.listen((res) {
+      _progressDialog.close();
+
+      // ResponseApi responseApi = await usersProvider.create(user);
+      ResponseApi responseApi = ResponseApi.fromJson(json.decode(res));
+      print('RESPUESTA: ${responseApi.toJson()}');
+      MySnackbar.show(context, responseApi.message);
+
+      if (responseApi.success) {
+        MyDialog.show(context, 'Vehículo Agregado','Tu Informacion se cargo correctamente');
+        // Future.delayed(Duration(seconds: 3), () {
+        //   Navigator.pushReplacementNamed(context, 'login');
+        // });
+      }
+      // else {
+      //   isEnable = true;
+      // }
+    });
+
+    /*//SEND DATA TO API
+    ResponseApi responseApi = await _carProvider.create(mycar);
+    //GET RESPONSE FROM SERVER API
+    MySnackbar.show(context, responseApi.message);
+    //IF RESPONSE IS SUCCESS CLEAR INPUTS
+    if (responseApi.success) {
+      _progressDialog.close();
+      marcaController.text = '';
+      modeloController.text = '';
+      placaController.text = '';
+      MyDialog.show(context, 'Vehículo Agregado','Tu Informacion se cargo correctamente');
+    }
+*/
+
+  }
 
 }
