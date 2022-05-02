@@ -178,16 +178,13 @@ class _ClientAddressListPageState extends State<ClientAddressListPage> {
 
   }
 
-
+//LIST ADRESS
   Widget _listAddress() {
     return FutureBuilder(
-        future: _con.getAddress(),
+        future: _con.getAddress(),//GET LIST ADRRES FROM PROVIDER
         builder: (context, AsyncSnapshot<List<Addresss>> snapshot) {
-
-
-          if (snapshot.hasData) {
-
-            if (snapshot.data.length > 0) {
+          if (snapshot.hasData) {//VALIDATED
+            if (snapshot.data.length > 0) {//VALIDATED
 
               return Stack(
                   children: [ListView.builder(

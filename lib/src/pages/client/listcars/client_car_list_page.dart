@@ -1,12 +1,14 @@
-import 'package:flutter/gestures.dart';
+import 'dart:async';
+
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:uber_clone_flutter/src/models/product.dart';
+import 'package:uber_clone_flutter/src/models/addresss.dart';
+import 'package:uber_clone_flutter/src/models/car.dart';
 import 'package:uber_clone_flutter/src/utils/my_colors.dart';
 import 'package:uber_clone_flutter/src/widgets/no_data_widget.dart';
+
 import 'client_car_list_controller.dart';
-
-
 
 class ClientCarsListPage extends StatefulWidget {
   const ClientCarsListPage({Key key}) : super(key: key);
@@ -27,229 +29,271 @@ class _ClientCarsListPageState extends State<ClientCarsListPage> {
       _con.init(context, refresh);
     });
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Mis Servicios'),
         backgroundColor: MyColors.primaryColor,
+        title: Text('Direcciones'),
+        actions: [
+          _iconAdd()
+        ],
       ),
-      bottomNavigationBar: Container(
-        height: MediaQuery.of(context).size.height * 0.275,
-        child: Column(
-          children: [
-            Divider(
-              color: Colors.grey[400],
-              endIndent: 30, // DERECHA
-              indent: 30, //IZQUIERDA
-            ),
-            _textTotalPrice(),
-            _buttonNext()
-          ],
+      body: Stack(
+        children: [
+          Positioned(
+              top: 0,
+              child: _textSelectAddress()
+          ),
+          Container(
+              margin: EdgeInsets.only(top: 50),
+              child: _listAddress()
+          ),
+
+
+        ],
+      ),
+
+
+    );
+
+  }
+
+  Widget _noCars() {
+    return Column(
+      children: [
+        Container(
+            margin: EdgeInsets.only(top: 30),
+            child: NoDataWidget(text: 'No tienes ningún Vehiculo, agrega uno')
         ),
-      ),
-      body: _con.selectedProducts.length > 0
-          ? ListView(
-        children: _con.selectedProducts.map((Product product) {
-          return _cardProduct(product);
-        }).toList(),
-      )
-          : NoDataWidget(text: 'Ningun producto agregado',),
+        _buttonNewCar()
+      ],
     );
   }
 
-  Widget _buttonNext() {
+
+  Widget _buttonNewCar() {
     return Container(
-      margin: EdgeInsets.only(left: 30, right: 30, top: 20, bottom: 30),
+      height: 40,
       child: ElevatedButton(
-        onPressed: _con.goToAddress,
+        onPressed: _con.goToNewCard,
+        child: Text(
+            'Nuevo Vehiculo'
+        ),
         style: ElevatedButton.styleFrom(
-            primary: MyColors.primaryColor,
-            padding: EdgeInsets.symmetric(vertical: 5),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12)
-            )
+            primary: Colors.blue
         ),
-        child: Stack(
-          children: [
-            Align(
-              alignment: Alignment.center,
-              child: Container(
-                height: 50,
-                alignment: Alignment.center,
-                child: Text(
-                  'CONTINUAR',
-                  style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold
+      ),
+    );
+  }
+
+  // Widget _buttonAccept() {
+  //
+  //   return Container(
+  //     height: 50,
+  //     width: double.infinity,
+  //     margin: EdgeInsets.symmetric(horizontal: 50),
+  //     child: ElevatedButton(
+  //       onPressed:  _con.createOrder,
+  //       child: Text(
+  //           'Pagar con tarjeta'
+  //
+  //       ),
+  //       style: ElevatedButton.styleFrom(
+  //           shape: RoundedRectangleBorder(
+  //               borderRadius: BorderRadius.circular(30)
+  //           ),
+  //           primary: MyColors.primaryColor
+  //       ),
+  //     ),
+  //   );
+  //
+  // }
+
+  // Widget _buttonAcceptCash() {
+  //
+  //   return Container(
+  //     height: 50,
+  //     width: double.infinity,
+  //     margin: EdgeInsets.symmetric( horizontal: 50),
+  //     child: ElevatedButton(
+  //       onPressed:  _con.createOrderCash,
+  //       child: Text(
+  //           'Pagar con efectivo'
+  //
+  //       ),
+  //       style: ElevatedButton.styleFrom(
+  //           shape: RoundedRectangleBorder(
+  //               borderRadius: BorderRadius.circular(30)
+  //           ),
+  //           primary: MyColors.primaryColor
+  //       ),
+  //     ),
+  //   );
+  //
+  // }
+
+
+
+  // Widget _buttonAcceptCreateCard() {
+  //
+  //   return Container(
+  //     height: 50,
+  //     width: double.infinity,
+  //     margin: EdgeInsets.symmetric( horizontal: 50),
+  //     child: ElevatedButton(
+  //       onPressed: (){
+  //         _con.cardsStore.length > 2?AwesomeDialog(
+  //           context: context,
+  //           dialogType: DialogType.ERROR,
+  //           animType: AnimType.BOTTOMSLIDE,
+  //           title: 'Solo puedes ingresar hasta 3 tarjetas elimina Una.',
+  //           desc: '',
+  //           btnOkOnPress: () {
+  //
+  //           },
+  //         ).show():Navigator.pushNamed(
+  //             context,
+  //             'client/payments/create');
+  //         ;
+  //       },
+  //       child: Text(
+  //           'Agregar Tarjeta'
+  //       ),
+  //       style: ElevatedButton.styleFrom(
+  //           shape: RoundedRectangleBorder(
+  //               borderRadius: BorderRadius.circular(30)
+  //           ),
+  //           primary: MyColors.primaryColor
+  //       ),
+  //     ),
+  //   );
+  //
+  //
+  // }
+
+//LIST ADRESS
+  Widget _listAddress() {
+    return FutureBuilder(
+        future: _con.getCars(),//GET LIST ADRRES FROM PROVIDER
+        builder: (context, AsyncSnapshot<List<Car>> snapshot) {
+          if (snapshot.hasData) {//VALIDATED
+            if (snapshot.data.length > 0) {//VALIDATED
+
+              return Stack(
+                  children: [ListView.builder(
+                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                      itemCount: snapshot.data?.length ?? 0,
+                      itemBuilder: (_, index) {
+                        return _radioSelectorAddress(snapshot.data[index], index);
+                      }
                   ),
-                ),
-              ),
-            ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Container(
-                margin: EdgeInsets.only(left: 80, top: 9),
-                height: 30,
-                child: Icon(
-                  Icons.check_circle,
-                  color: Colors.green,
-                  size: 30,
-                ),
-              ),
-            )
+                    // Container(
+                    //   margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.450),
+                    //
+                    //   child: _buttonAcceptCreateCard(),
+                    // ),
+                    // Container(
+                    //   margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.550),
+                    //
+                    //   child: _buttonAccept(),
+                    // ),
+                    // Container(
+                    //   margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.650),
+                    //
+                    //   child: _buttonAcceptCash(),
+                    // ),
+                  ]
+              );
 
-          ],
-        ),
-      ),
+
+            }
+            else {
+              return _noCars();
+            }
+
+          }
+          else {
+            return _noCars();
+          }
+
+        }
+
     );
+
   }
 
-  Widget _cardProduct(Product product) {
+  Widget _radioSelectorAddress(Car cars, int index) {
+
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      child: Row(
+      margin: EdgeInsets.symmetric(horizontal: 20),
+      child: Column(
         children: [
-          _imageProduct(product),
-          SizedBox(width: 10),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          Row(
+
             children: [
-              Text(
-                product?.name ?? '',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold
-                ),
+
+              Radio(
+                value: index,
+                groupValue: _con.radioValue,
+                onChanged:_con.handleRadioValueChange,
+
               ),
-              SizedBox(height: 10),
-              _addOrRemoveItem(product)
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    cars?.marca ?? '',
+                    style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold
+                    ),
+                  ),
+                  Text(
+                    cars?.modelo ?? '',
+                    style: TextStyle(
+                      fontSize: 12,
+                    ),
+                  )
+                ],
+              ),
+
             ],
           ),
-          Spacer(),
-          Column(
-            children: [
-              _textPrice(product),
-              _iconDelete(product)
-            ],
+          Divider(
+            color: Colors.grey[400],
           )
         ],
       ),
     );
   }
 
-  Widget _iconDelete(Product product) {
-    return IconButton(
-        onPressed: () {
-          _con.deleteItem(product);
-        },
-        icon: Icon(Icons.delete, color: MyColors.primaryColor,)
-    );
-  }
-
-  Widget _textTotalPrice() {
+  Widget _textSelectAddress() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 30, vertical: 1),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            'Total:',
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 22
-            ),
-          ),
-          Text(
-            '\$ ${_con.total}',
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20
-            ),
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget _textPrice(Product product) {
-    return Container(
-      margin: EdgeInsets.only(top: 1),
+      alignment: Alignment.centerLeft,
+      margin: EdgeInsets.symmetric(horizontal: 40, vertical: 30),
       child: Text(
-        '${product.price * product.quantity}',
+        'Elige donde recibir tus servicios',
         style: TextStyle(
-            color: Colors.grey,
+            fontSize: 19,
             fontWeight: FontWeight.bold
         ),
       ),
     );
   }
 
-  Widget _imageProduct(Product product) {
-    return Container(
-      width: 90,
-      height: 90,
-      padding: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(20)),
-          color: Colors.grey[200]
-      ),
-      child: FadeInImage(
-        image: product.image1 != null
-            ? NetworkImage(product.image1)
-            : AssetImage('assets/img/no-image.png'),
-        fit: BoxFit.contain,
-        fadeInDuration: Duration(milliseconds: 50),
-        placeholder: AssetImage('assets/img/no-image.png'),
-      ),
-    );
-  }
 
-  Widget _addOrRemoveItem(Product product) {
-    return Row(
-      children: [
-        GestureDetector(
-          onTap: () {
-            _con.removeItem(product);
-          },
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 7),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(8),
-                    bottomLeft: Radius.circular(8)
-                ),
-                color: Colors.grey[200]
-            ),
-            child: Text('-'),
-          ),
-        ),
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 7),
-          color: Colors.grey[200],
-          child: Text('${product?.quantity ?? 0}'),
-        ),
-        GestureDetector(
-          onTap: () {
-            _con.addItem(product);
-          },
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 7),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(8),
-                    bottomRight: Radius.circular(8)
-                ),
-                color: Colors.grey[200]
-            ),
-            child: Text('+'),
-          ),
-        ),
-      ],
+  Widget _iconAdd() {
+    return IconButton(
+        onPressed: _con.goToNewCard,
+        icon: Icon(Icons.add, color: Colors.white)
     );
   }
 
   void refresh() {
-    setState(() {});
+    setState(() {
+
+    });
+
   }
 }
