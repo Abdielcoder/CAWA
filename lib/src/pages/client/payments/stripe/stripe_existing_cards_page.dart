@@ -166,7 +166,7 @@ class ExistingCardsPageState extends State<ExistingCardsPage> {
     // );
     ProgressDialog progressDialog = new ProgressDialog(context: context);
     progressDialog.show(max: 100, msg: 'Espere un momento');
-    print ( 'El valor de esta verga es: ${_con.totalPs}');
+    print ( 'El valor es: ${_con.totalPs}');
     // await dialog.show();
     var expiryArr = cardClient.expiryDate.split('/');
       CreditCard stripeCard = CreditCard(

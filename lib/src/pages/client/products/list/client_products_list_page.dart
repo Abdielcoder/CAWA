@@ -321,7 +321,7 @@ class _ClientProductsListPageState extends State<ClientProductsListPage> {
           ),
           ListTile(
             onTap: _con.goToCreateCar,
-            title: Text('Agregar Vehículo'),
+            title: Text('Vehículos'),
             trailing: Icon(Icons.airport_shuttle),
           ),
           ListTile(
