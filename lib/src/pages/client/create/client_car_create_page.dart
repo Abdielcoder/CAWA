@@ -59,18 +59,13 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
         ),
         body: Column(
           children: [
-
-            _imageUser(),
-
+            _textImg(),
+            _photoColorCar(),
             _marcaModelo(),
-
             _yearDescripcion(),
-
             _placa(),
-
             _changeColor(),
-
-            _imageCar()
+            _imageColorCar()
           ],
 
         ),
@@ -122,7 +117,7 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
 
   Widget _changeColor(){
     return Container(
-      margin: EdgeInsets.only(top: 20,bottom: 15),
+      margin: EdgeInsets.only(top: 0,bottom:10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -167,31 +162,50 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
                 },
               );
             },
-            child: const Text('Selecciona color'),
+            child: const Text('Selecciona color',
+            style: TextStyle(
+              fontFamily: 'Lexendeca-Regular',
+            ),),
             color: MyColors.primaryColor,
-            textColor: Colors.white
+            textColor: Colors.white,
         ),
       ],
     );
   }
 
-  Widget _imageUser() {
-
+  Widget _textImg() {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+        child: Text(
+          "Seleciona o toma una foto",
+          style:  TextStyle(
+          color: Colors.white,
+          fontFamily: 'Lexendeca-Regular',
+          )
+        ),
+
+    );
+  }
+
+
+  Widget _photoColorCar() {
+
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 1),
       child: GestureDetector(
         onTap: _con.showAlertDialog,
         child: CircleAvatar(
           backgroundImage: _con.imageFile != null
               ? FileImage(_con.imageFile)
-              : AssetImage('assets/img/user_profile_2.png'),
+              : AssetImage('assets/img/pushf.png'),
           radius: 60,
           backgroundColor: Colors.grey[200],
         ),
       ),
     );
   }
-  Widget _imageCar() {
+
+  Widget _imageColorCar() {
     return GestureDetector(
       onTap: (){},
       child: CircleAvatar(
@@ -204,6 +218,7 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
     );
   }
 
+
   Widget _textFieldMarca() {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -212,18 +227,19 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
           borderRadius: BorderRadius.circular(30)
       ),
       child: TextField(
+        inputFormatters: [
+          UpperCaseTextFormatter(),
+        ],
         controller: _con.marcaController,
         decoration: InputDecoration(
             hintText: 'Marca',
             border: InputBorder.none,
             contentPadding: EdgeInsets.all(15),
             hintStyle: TextStyle(
-                color: MyColors.primaryColorDark
+                color: MyColors.primaryColorDark,
+                fontFamily: 'Lexendeca-Black',
             ),
-            suffixIcon: Icon(
-              Icons.list_alt,
-              color: MyColors.primaryColor,
-            )
+          suffixIcon:  Image.asset('assets/img/mcarro.png', width: 30, height: 30),
         ),
       ),
     );
@@ -238,6 +254,7 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
       margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       decoration: BoxDecoration(
           color: Colors.white,
+
           borderRadius: BorderRadius.circular(30)
       ),
       child:DropdownSearch<String>(
@@ -284,6 +301,9 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
           borderRadius: BorderRadius.circular(30)
       ),
       child: TextField(
+        inputFormatters: [
+          UpperCaseTextFormatter(),
+        ],
         controller: _con.placaController,
         decoration: InputDecoration(
             hintText: 'Placa',
@@ -291,12 +311,10 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
             border: InputBorder.none,
             contentPadding: EdgeInsets.all(15),
             hintStyle: TextStyle(
-                color: MyColors.primaryColorDark
+                color: MyColors.primaryColorDark,
+              fontFamily: 'Lexendeca-Black',
             ),
-            suffixIcon: Icon(
-              Icons.list_alt,
-              color: MyColors.primaryColor,
-            )
+          suffixIcon:  Image.asset('assets/img/car_plate.png', width: 30, height: 30),
         ),
       ),
     );
@@ -310,18 +328,19 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
           borderRadius: BorderRadius.circular(30)
       ),
       child: TextField(
+        inputFormatters: [
+          UpperCaseTextFormatter(),
+        ],
         controller: _con.modeloController,
         decoration: InputDecoration(
             hintText: 'Modelo',
             border: InputBorder.none,
             contentPadding: EdgeInsets.all(15),
             hintStyle: TextStyle(
-                color: MyColors.primaryColorDark
+                color: MyColors.primaryColorDark,
+              fontFamily: 'Lexendeca-Black',
             ),
-            suffixIcon: Icon(
-              Icons.list_alt,
-              color: MyColors.primaryColor,
-            )
+            suffixIcon:  Image.asset('assets/img/brand.png', width: 20, height: 20),
         ),
       ),
     );
@@ -337,8 +356,9 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
         onPressed: _con.createCar,
         child: Text('Agregar Auto',
         style: TextStyle(
-          fontSize: 17.0,
-          color: Colors.white
+          fontSize: 15.0,
+          color: Colors.white,
+          fontFamily: 'Lexendeca-Black',
         ),),
         style: ElevatedButton.styleFrom(
 

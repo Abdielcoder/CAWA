@@ -98,6 +98,15 @@ flutter:
       fonts:
         - asset: assets/fonts/Roboto/Roboto-Medium.ttf
 
+    - family: Lexendeca-Regular
+      fonts:
+        - asset: assets/fonts/Lexendeca/LexendDeca-Regular.ttf
+    - family: Lexendeca-Bold
+      fonts:
+        - asset: assets/fonts/Lexendeca/LexendDeca-Bold.ttf
+    - family: Lexendeca-Black
+      fonts:
+        - asset: assets/fonts/Lexendeca/LexendDeca-Black.ttf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
