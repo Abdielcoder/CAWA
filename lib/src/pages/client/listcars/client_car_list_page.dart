@@ -34,7 +34,7 @@ class _ClientCarsListPageState extends State<ClientCarsListPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: MyColors.primaryColor,
-        title: Text('Direcciones'),
+        title: Text('Vehiculos'),
         actions: [
           _iconAdd()
         ],
@@ -242,6 +242,13 @@ class _ClientCarsListPageState extends State<ClientCarsListPage> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                    CircleAvatar(
+                    backgroundImage: cars.image != null
+                        ? NetworkImage(cars.image)
+                        : AssetImage('assets/img/user_profile_2.png'),
+                    radius: 60,
+                    backgroundColor: Colors.grey[200],
+                  ),
                   Text(
                     cars?.marca ?? '',
                     style: TextStyle(
@@ -273,7 +280,7 @@ class _ClientCarsListPageState extends State<ClientCarsListPage> {
       alignment: Alignment.centerLeft,
       margin: EdgeInsets.symmetric(horizontal: 40, vertical: 30),
       child: Text(
-        'Elige donde recibir tus servicios',
+        'Vehiculos en tu lista ',
         style: TextStyle(
             fontSize: 19,
             fontWeight: FontWeight.bold
