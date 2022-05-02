@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
+
 import 'package:uber_clone_flutter/src/models/category.dart';
 import 'package:uber_clone_flutter/src/models/response_api.dart';
 
@@ -13,6 +15,7 @@ import 'package:uber_clone_flutter/src/utils/shared_pref.dart';
 
 import '../../../models/car.dart';
 import '../../../provider/users_provider.dart';
+import '../../../utils/dialog.dart';
 
 class ClientCarCreateController {
 
@@ -49,9 +52,14 @@ class ClientCarCreateController {
   SharedPref sharedPref = new SharedPref();
   File imageFile;
 
+  ProgressDialog _progressDialog;
+
   Future init(BuildContext context, Function refresh) async {
     this.context = context;
     this.refresh = refresh;
+
+    _progressDialog = ProgressDialog(context: context);
+
     user = User.fromJson(await sharedPref.read('user'));
     usersProvider.init(context, sessionUser: user);
   }
@@ -68,6 +76,8 @@ class ClientCarCreateController {
       MySnackbar.show(context, 'Debe ingresar todos los campos');
       return;
     }
+
+    _progressDialog.show(max: 100, msg: 'Espere un momento...');
 
     //CREATE OBJECT FROM INPUTS
    Car mycar = new Car(
@@ -86,11 +96,13 @@ class ClientCarCreateController {
     //GET RESPONSE FROM SERVER API
     MySnackbar.show(context, responseApi.message);
     //IF RESPONSE IS SUCCESS CLEAR INPUTS
-    // if (responseApi.success) {
-    //   marcaController.text = '';
-    //   modeloController.text = '';
-    //   placaController.text = '';
-    // }
+    if (responseApi.success) {
+      _progressDialog.close();
+      marcaController.text = '';
+      modeloController.text = '';
+      placaController.text = '';
+      MyDialog.show(context, 'Vehículo Agregado','Tu Informacion se cargo correctamente');
+    }
 
 
   }
