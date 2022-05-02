@@ -224,7 +224,9 @@ class _ClientCarsListPageState extends State<ClientCarsListPage> {
   }
 
   Widget _radioSelectorAddress(Car cars, int index) {
-
+    String colorCarBd =cars?.color ?? '';
+    String colorWHex = "0xFF${colorCarBd}";
+    int colorCar = int.parse(colorWHex);
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20),
       child: Column(
@@ -245,23 +247,114 @@ class _ClientCarsListPageState extends State<ClientCarsListPage> {
                     CircleAvatar(
                     backgroundImage: cars.image != null
                         ? NetworkImage(cars.image)
-                        : AssetImage('assets/img/user_profile_2.png'),
-                    radius: 60,
+                        : AssetImage('assets/img/placac.png'),
+                    radius: 40,
                     backgroundColor: Colors.grey[200],
                   ),
-                  Text(
-                    cars?.marca ?? '',
-                    style: TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.bold
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8,bottom: 5),
+                    child: Text(
+                      cars?.marca ?? '',
+                      style: TextStyle(
+                          color: MyColors.colorTitulosSegundos,
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold
+                      ),
                     ),
                   ),
-                  Text(
-                    cars?.modelo ?? '',
-                    style: TextStyle(
-                      fontSize: 12,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8,bottom: 5),
+                    child: Text(
+                      cars?.modelo ?? '',
+                      style: TextStyle(
+                        fontSize: 12,
+                      ),
                     ),
                   )
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8,bottom: 5),
+                    child: Text(
+                    'AÑO',
+                      style: TextStyle(
+                          color: MyColors.colorTitulosSegundos,
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8,bottom: 5),
+                    child: Text(
+                      cars?.year ?? '',
+                      style: TextStyle(
+                          fontSize: 12,
+
+                      ),
+                    ),
+                  ),
+
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top:0, left: 8,bottom: 5),
+                    child: Text(
+                      'COLOR',
+                      style: TextStyle(
+                          color: MyColors.colorTitulosSegundos,
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 18,bottom: 5),
+                    child: CircleAvatar(
+                      backgroundImage: cars.color != null
+                          ? AssetImage('')
+                          : AssetImage('assets/img/car_color.png'),
+                      radius: 7,
+                      backgroundColor: Color(colorCar),
+                    ),
+                  ),
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top:0, left: 8,bottom: 5),
+                    child: Text(
+                      'PLACA',
+                      style: TextStyle(
+                          color: MyColors.colorTitulosSegundos,
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8,bottom: 5),
+                    child: Text(
+                      cars?.placa ?? '',
+                      style: TextStyle(
+                          fontSize: 12,
+
+                      ),
+                    ),
+                  ),
                 ],
               ),
 

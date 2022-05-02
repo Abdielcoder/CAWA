@@ -33,7 +33,7 @@ class Car{
   factory Car.fromJson(Map<String, dynamic> json) => Car(
     id: json["id"] is int ? json["id"].toString() : json['id'],
     id_user: json["id_user"] is int ? json["id_user"].toString() : json['id_user'],
-    marca: json["name"],
+    marca: json["marca"],
     modelo: json["modelo"],
     year: json["year"],
     placa: json["placa"],

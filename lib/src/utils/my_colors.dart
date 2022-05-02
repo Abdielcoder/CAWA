@@ -11,6 +11,7 @@ class MyColors {
   static Color colorGoogle = Color(0xFFea4335);
   static Color colorAqua= Color(0xFF00968A);
   static Color colorMorado= Color(0xFF9C6FA1);
+  static Color colorTitulosSegundos= Color(0xFF163870);
 
 
 }
