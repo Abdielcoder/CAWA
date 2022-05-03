@@ -4,6 +4,7 @@ import 'package:uber_clone_flutter/src/pages/client/address/list/client_address_
 import 'package:uber_clone_flutter/src/pages/client/address/map/client_address_map_page.dart';
 import 'package:uber_clone_flutter/src/pages/client/create/client_car_create_page.dart';
 import 'package:uber_clone_flutter/src/pages/client/listcars/client_car_list_page.dart';
+import 'package:uber_clone_flutter/src/pages/client/listcarspay/list_car_pay_page.dart';
 import 'package:uber_clone_flutter/src/pages/client/orders/create/client_orders_create_page.dart';
 import 'package:uber_clone_flutter/src/pages/client/orders/list/client_orders_list_page.dart';
 import 'package:uber_clone_flutter/src/pages/client/orders/map/client_orders_map_page.dart';
@@ -83,6 +84,7 @@ class _MyappState extends State<MyApp> {
         'client/update': (BuildContext context) => ClientUpdatePage(),
         'client/create/car': (BuildContext context) => CLientCarCreatePage(),
         'client/car/list': (BuildContext context) => ClientCarsListPage(),
+        'client/list/car/pay': (BuildContext context) => ListCarPayPage(),
         'client/orders/create' : (BuildContext context) => ClientOrdersCreatePage(),
         'client/address/list' : (BuildContext context) => ClientAddressListPage(),
         'client/address/create' : (BuildContext context) => ClientAddressCreatePage(),

@@ -10,7 +10,7 @@ import '../../../provider/car_provider.dart';
 import '../../../utils/dialog.dart';
 
 
-class ClientCarListController {
+class ListCarPayController {
 
   BuildContext context;
   Function refresh;
@@ -114,11 +114,11 @@ class ClientCarListController {
       }
     }
   }
-  void handleRadioValueChange(int value) async {
-    radioValue = value;
-    refresh();
-    print('Valor seleccioonado: $radioValue');
-  }
+  // void handleRadioValueChange(int value) async {
+  //   radioValue = value;
+  //   refresh();
+  //   print('Valor seleccioonado: $radioValue');
+  // }
 
 
 }

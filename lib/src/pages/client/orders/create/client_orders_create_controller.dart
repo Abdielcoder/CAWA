@@ -59,7 +59,7 @@ class ClientOrdersCreateController {
   }
 
   void goToAddress() {
-    Navigator.pushNamed(context, 'client/address/list');
+    Navigator.pushNamed(context, 'client/list/car/pay');
   }
 
 }
