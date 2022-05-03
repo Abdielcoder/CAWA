@@ -87,7 +87,7 @@ class _ListCarPayPageState extends State<ListCarPayPage> {
             'Nuevo Vehiculo'
         ),
         style: ElevatedButton.styleFrom(
-            primary: Colors.blue
+            primary: MyColors.primaryColor
         ),
       ),
     );
@@ -155,7 +155,7 @@ class _ListCarPayPageState extends State<ListCarPayPage> {
               Column(children: <Widget>[
               SizedBox(height: 32.0),
               GestureDetector(
-              onTap: _iconGo,
+              onTap: (){},
               child:  CircleAvatar(
                     backgroundImage: cars.image != null
                         ? NetworkImage(cars.image)
@@ -280,7 +280,7 @@ class _ListCarPayPageState extends State<ListCarPayPage> {
 
                   Padding(
                     padding: const EdgeInsets.only(left: 20,bottom: 5),
-                    child: _iconGo(),
+                    child: _iconGo(cars),
                   )
 
                 ],
@@ -392,7 +392,7 @@ class _ListCarPayPageState extends State<ListCarPayPage> {
 
   }
 
-  Widget _iconGo() {
+  Widget _iconGo(Car cars) {
     return Container(
       child: ElevatedButton(
 
@@ -401,7 +401,7 @@ class _ListCarPayPageState extends State<ListCarPayPage> {
           fontSize: 10
         ),),
         onPressed: () {
-          _con.goToAddress();
+          _con.goToAddress(cars);
         },
         style: ElevatedButton.styleFrom(
             primary: MyColors.primaryColor,

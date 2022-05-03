@@ -55,8 +55,8 @@ class ClientOrdersMapController {
     this.context = context;
     this.refresh = refresh;
     order = Order.fromJson(ModalRoute.of(context).settings.arguments as Map<String, dynamic>);
-    deliveryMarker = await createMarkerFromAsset('assets/img/circulolavador.png');
-    homeMarker = await createMarkerFromAsset('assets/img/cwash.png');
+    deliveryMarker = await createMarkerFromAsset('assets/img/pinwash.png');
+    homeMarker = await createMarkerFromAsset('assets/img/carrowash.png');
 
     socket = IO.io('http://${Environment.API_DELIVERY}/orders/delivery', <String, dynamic> {
       'transports': ['websocket'],

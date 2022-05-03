@@ -98,7 +98,7 @@ class _ClientOrdersMapPageState extends State<ClientOrdersMapPage> {
             child: FadeInImage(
               image: _con.order?.delivery?.image != null
                   ? NetworkImage(_con.order?.delivery?.image)
-                  : AssetImage('assets/img/no-image.png'),
+                  : AssetImage('assets/img/no-image.png',),
               fit: BoxFit.cover,
               fadeInDuration: Duration(milliseconds: 50),
               placeholder: AssetImage('assets/img/no-image.png'),

@@ -3,6 +3,8 @@ import 'package:flutter/scheduler.dart';
 import 'package:uber_clone_flutter/src/models/rol.dart';
 import 'package:uber_clone_flutter/src/pages/roles/roles_controller.dart';
 
+import '../../utils/my_colors.dart';
+
 
 class RolesPage extends StatefulWidget {
   const RolesPage({Key key}) : super(key: key);
@@ -29,6 +31,7 @@ class _RolesPageState extends State<RolesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: MyColors.primaryColor,
         title: Text('Selecciona un rol'),
       ),
       body: Container(

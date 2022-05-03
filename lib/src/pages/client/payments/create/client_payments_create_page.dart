@@ -30,65 +30,78 @@ class _ClientPaymentsCreatePageState extends State<ClientPaymentsCreatePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Pagos'),
-        backgroundColor: MyColors.primaryColor,
+    return Container(
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: [Colors.blue.shade200, Colors.cyan.shade900])
       ),
-      body: ListView(
-        children: [
-          CreditCardWidget(
-            cardNumber: _con.cardNumber,
-            expiryDate: _con.expireDate,
-            cardHolderName: _con.cardHolderName,
-            cvvCode: _con.cvvCode,
-            showBackView: _con.isCvvFocused,
-            cardBgColor: MyColors.primaryColor,
-            obscureCardNumber: true,
-            obscureCardCvv: true,
-            animationDuration: Duration(milliseconds: 1000),
-            labelCardHolder: 'NOMBRE Y APELLIDO',
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          title: Text('Crear Tarjeta'),
+
+        ),
+        body: Container(
+          margin: EdgeInsets.only(left: 70,right: 70),
+          child: ListView(
+            children: [
+              CreditCardWidget(
+                cardNumber: _con.cardNumber,
+                expiryDate: _con.expireDate,
+                cardHolderName: _con.cardHolderName,
+                cvvCode: _con.cvvCode,
+                showBackView: _con.isCvvFocused,
+                cardBgColor: MyColors.primaryColor,
+                obscureCardNumber: true,
+                obscureCardCvv: true,
+                animationDuration: Duration(milliseconds: 1000),
+                labelCardHolder: 'NOMBRE Y APELLIDO',
+              ),
+              CreditCardForm(
+                cvvCode: '',
+                expiryDate: '',
+                cardHolderName: '',
+                cardNumber: '',
+                formKey: _con.keyForm, // Required
+                onCreditCardModelChange: _con.onCreditCardModelChanged, // Required
+                themeColor: Colors.red,
+                obscureCvv: true,
+                obscureNumber: true,
+                cardNumberDecoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Numero de la tarjeta',
+                  hintText: 'XXXX XXXX XXXX XXXX',
+                ),
+                expiryDateDecoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Fecha de expiracion',
+                  hintText: 'XX/XX',
+                ),
+                cvvCodeDecoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'CVV',
+                  hintText: 'XXX',
+                ),
+                cardHolderDecoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Nombre del titular',
+                ),
+              ),
+              // _documentInfo(),
+              _buttonNext()
+            ],
           ),
-          CreditCardForm(
-            cvvCode: '',
-            expiryDate: '',
-            cardHolderName: '',
-            cardNumber: '',
-            formKey: _con.keyForm, // Required
-            onCreditCardModelChange: _con.onCreditCardModelChanged, // Required
-            themeColor: Colors.red,
-            obscureCvv: true,
-            obscureNumber: true,
-            cardNumberDecoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: 'Numero de la tarjeta',
-              hintText: 'XXXX XXXX XXXX XXXX',
-            ),
-            expiryDateDecoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: 'Fecha de expiracion',
-              hintText: 'XX/XX',
-            ),
-            cvvCodeDecoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: 'CVV',
-              hintText: 'XXX',
-            ),
-            cardHolderDecoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: 'Nombre del titular',
-            ),
-          ),
-          // _documentInfo(),
-          _buttonNext()
-        ],
+        ),
       ),
     );
   }
 
   Widget _buttonNext() {
     return Container(
-      margin: EdgeInsets.all(20),
+      margin: EdgeInsets.all(50),
       child: ElevatedButton(
         onPressed: _con.createCardToken,
         style: ElevatedButton.styleFrom(
@@ -133,71 +146,6 @@ class _ClientPaymentsCreatePageState extends State<ClientPaymentsCreatePage> {
     );
   }
 
-  // Widget _documentInfo() {
-  //   return Container(
-  //     margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-  //     child: Row(
-  //       children: [
-  //         Flexible(
-  //           flex: 2,
-  //           child: Material(
-  //             elevation: 2.0,
-  //             color: Colors.white,
-  //             borderRadius: BorderRadius.all(Radius.circular(5)),
-  //             child: Container(
-  //               padding: EdgeInsets.symmetric(horizontal: 7),
-  //               child: Column(
-  //                 children: [
-  //                   Container(
-  //                     padding: EdgeInsets.symmetric(horizontal: 20),
-  //                     child: DropdownButton(
-  //                       underline: Container(
-  //                         alignment: Alignment.centerRight,
-  //                         child: Icon(
-  //                           Icons.arrow_drop_down_circle,
-  //                           color: MyColors.primaryColor,
-  //                         ),
-  //                       ),
-  //                       elevation: 3,
-  //                       isExpanded: true,
-  //                       hint: Text(
-  //                         'Tipo doc',
-  //                         style: TextStyle(
-  //                             color: Colors.grey,
-  //                             fontSize: 14
-  //                         ),
-  //                       ),
-  //                       items: _dropDownItems(_con.documentTypeList),
-  //                       value: _con.typeDocument,
-  //                       onChanged: (option) {
-  //                         setState(() {
-  //                           print('Reparidor selecciondo $option');
-  //                           _con.typeDocument = option; // ESTABLECIENDO EL VALOR SELECCIONADO
-  //                         });
-  //                       },
-  //                     ),
-  //                   )
-  //                 ],
-  //               ),
-  //             ),
-  //           ),
-  //         ),
-  //         SizedBox(width: 15),
-  //         Flexible(
-  //           flex: 4,
-  //           child: TextField(
-  //             controller: _con.documentNumberController,
-  //             keyboardType: TextInputType.phone,
-  //             decoration: InputDecoration(
-  //               border: OutlineInputBorder(),
-  //               labelText: 'Numero de documento'
-  //             ),
-  //           ),
-  //         )
-  //       ],
-  //     ),
-  //   );
-  // }
 
   List<DropdownMenuItem<String>> _dropDownItems(List<MercadoPagoDocumentType> documentType) {
     List<DropdownMenuItem<String>> list = [];

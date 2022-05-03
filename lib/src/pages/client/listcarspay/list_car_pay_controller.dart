@@ -91,7 +91,10 @@ class ListCarPayController {
     MyDialog.info(context, 'ELIMINAR','¿Quieres eliminar el Vehiculo?...','client/car/list',cars.id);
   }
 
-  void goToAddress() {
+  void goToAddress(Car cars) async{
+    // _sharedPref.save('cars', cars.id);
+    // Car idcar = Car.fromJson(await _sharedPref.read('cars') ?? {});
+    // print("valor id car : ${idcar}");
     Navigator.pushNamed(context, 'client/address/list');
   }
 

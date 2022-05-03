@@ -29,6 +29,7 @@ class _ClientAddressCreatePageState extends State<ClientAddressCreatePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: MyColors.primaryColor,
         title: Text('Nueva direccion'),
       ),
       bottomNavigationBar: _buttonAccept(),

@@ -86,7 +86,7 @@ class _ClientCarsListPageState extends State<ClientCarsListPage> {
             'Nuevo Vehiculo'
         ),
         style: ElevatedButton.styleFrom(
-            primary: Colors.blue
+            primary: MyColors.primaryColor
         ),
       ),
     );
@@ -137,19 +137,13 @@ class _ClientCarsListPageState extends State<ClientCarsListPage> {
     String colorWHex = "0xFF${colorCarBd}";
     int colorCar = int.parse(colorWHex);
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20),
+      margin: EdgeInsets.symmetric(horizontal: 50),
       child: Column(
         children: [
           Row(
 
             children: [
 
-              Radio(
-                value: index,
-                groupValue: _con.radioValue,
-                onChanged:  _con.handleRadioValueChange,
-
-              ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

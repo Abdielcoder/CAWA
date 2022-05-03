@@ -75,7 +75,7 @@ class ExistingCardsMenuPageState extends State<ExistingCardsMenuPage> {
 
   Widget _cardProduct(CardClient cardClient) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+      margin: EdgeInsets.symmetric(horizontal: 70, vertical: 0),
       child: Row(
         children: [
 
@@ -92,7 +92,7 @@ class ExistingCardsMenuPageState extends State<ExistingCardsMenuPage> {
                   cardHolderName: cardClient.cardHolderName,
                   cvvCode: cardClient.ccv,
                   height: MediaQuery.of(context).size.height*0.210,
-                  width: MediaQuery.of(context).size.width*0.650,
+                  width: MediaQuery.of(context).size.width*0.550,
                   showBackView: false,
                 ),
               ),

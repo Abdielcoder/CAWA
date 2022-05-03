@@ -87,7 +87,7 @@ class _ClientAddressListPageState extends State<ClientAddressListPage> {
             'Nueva direccion'
         ),
         style: ElevatedButton.styleFrom(
-            primary: Colors.blue
+            primary: MyColors.primaryColor
         ),
       ),
     );

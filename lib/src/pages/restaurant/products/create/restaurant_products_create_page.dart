@@ -33,7 +33,8 @@ class _RestaurantProductsCreatePageState extends State<RestaurantProductsCreateP
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Nueva producto'),
+        backgroundColor: MyColors.primaryColor,
+        title: Text('Nuevo producto o servicio'),
       ),
       body: ListView(
         children: [
@@ -73,14 +74,14 @@ class _RestaurantProductsCreatePageState extends State<RestaurantProductsCreateP
         maxLines: 1,
         maxLength: 180,
         decoration: InputDecoration(
-            hintText: 'Nombre de la producto',
+            hintText: 'Nombre del producto',
             border: InputBorder.none,
             contentPadding: EdgeInsets.all(15),
             hintStyle: TextStyle(
                 color: MyColors.primaryColorDark
             ),
             suffixIcon: Icon(
-              Icons.local_pizza,
+              Icons.adjust,
               color: MyColors.primaryColor,
             )
         ),
@@ -204,7 +205,7 @@ class _RestaurantProductsCreatePageState extends State<RestaurantProductsCreateP
         maxLines: 3,
         maxLength: 255,
         decoration: InputDecoration(
-          hintText: 'Descripcion de la categoria',
+          hintText: 'Descripcion del servicio o producto',
           border: InputBorder.none,
           contentPadding: EdgeInsets.all(15),
           hintStyle: TextStyle(

@@ -81,7 +81,7 @@ class ExistingCardsPageState extends State<ExistingCardsPage> {
 
   Widget _cardProduct(CardClient cardClient) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+      margin: EdgeInsets.symmetric(horizontal: 70, vertical: 0),
       child: Row(
         children: [
 
@@ -98,7 +98,7 @@ class ExistingCardsPageState extends State<ExistingCardsPage> {
         cardHolderName: cardClient.cardHolderName,
         cvvCode: cardClient.ccv,
         height: MediaQuery.of(context).size.height*0.210,
-        width: MediaQuery.of(context).size.width*0.650,
+        width: MediaQuery.of(context).size.width*0.550,
         showBackView: false,
       ),
                ),
@@ -143,7 +143,7 @@ class ExistingCardsPageState extends State<ExistingCardsPage> {
   }
   Widget _textPago() {
     return Container(
-      margin: EdgeInsets.only(top:20,left: 64),
+      margin: EdgeInsets.only(top:20,left: 150),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

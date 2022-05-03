@@ -29,6 +29,7 @@ class _RestaurantCategoriesCreatePageState extends State<RestaurantCategoriesCre
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: MyColors.primaryColor,
         title: Text('Nueva categoria'),
       ),
       body: Column(
