@@ -5,6 +5,7 @@ import 'package:uber_clone_flutter/src/utils/shared_pref.dart';
 import '../../../models/car.dart';
 import '../../../models/user.dart';
 import '../../../provider/car_provider.dart';
+import '../../../utils/dialog.dart';
 
 
 class ClientCarListController {
@@ -86,7 +87,17 @@ class ClientCarListController {
   }
 
   void goToNewCard() async {
-    var result = await Navigator.pushNamed(context, 'client/cars/create');
+    var result = await Navigator.pushNamed(context, 'client/create/car');
+
+    if (result != null) {
+      if (result) {
+        refresh();
+      }
+    }
+  }
+
+  void goBack() async {
+    var result = await Navigator.pushNamed(context, 'client/products/list');
 
     if (result != null) {
       if (result) {
@@ -95,11 +106,10 @@ class ClientCarListController {
     }
   }
   void handleRadioValueChange(int value) async {
-    // radioValue = value;
-    // _sharedPref.save('address', address[value]);
-    //
-    // refresh();
-    // print('Valor seleccioonado: $radioValue');
+    radioValue = value;
+    MyDialog.info(context, 'ELIMINAR','¿Quieres eliminar el Vehiculo?...','client/car/list');
+    refresh();
+    print('Valor seleccioonado: $radioValue');
   }
 
 

@@ -35,6 +35,7 @@ class _ClientCarsListPageState extends State<ClientCarsListPage> {
       appBar: AppBar(
         backgroundColor: MyColors.primaryColor,
         title: Text('Vehiculos'),
+        automaticallyImplyLeading: false, //
         actions: [
           _iconAdd()
         ],
@@ -45,8 +46,12 @@ class _ClientCarsListPageState extends State<ClientCarsListPage> {
               top: 0,
               child: _textSelectAddress()
           ),
+          Positioned(
+              top: 0,
+              child: _textSeleciion()
+          ),
           Container(
-              margin: EdgeInsets.only(top: 50),
+              margin: EdgeInsets.only(top: 100),
               child: _listAddress()
           ),
 
@@ -87,90 +92,7 @@ class _ClientCarsListPageState extends State<ClientCarsListPage> {
     );
   }
 
-  // Widget _buttonAccept() {
-  //
-  //   return Container(
-  //     height: 50,
-  //     width: double.infinity,
-  //     margin: EdgeInsets.symmetric(horizontal: 50),
-  //     child: ElevatedButton(
-  //       onPressed:  _con.createOrder,
-  //       child: Text(
-  //           'Pagar con tarjeta'
-  //
-  //       ),
-  //       style: ElevatedButton.styleFrom(
-  //           shape: RoundedRectangleBorder(
-  //               borderRadius: BorderRadius.circular(30)
-  //           ),
-  //           primary: MyColors.primaryColor
-  //       ),
-  //     ),
-  //   );
-  //
-  // }
 
-  // Widget _buttonAcceptCash() {
-  //
-  //   return Container(
-  //     height: 50,
-  //     width: double.infinity,
-  //     margin: EdgeInsets.symmetric( horizontal: 50),
-  //     child: ElevatedButton(
-  //       onPressed:  _con.createOrderCash,
-  //       child: Text(
-  //           'Pagar con efectivo'
-  //
-  //       ),
-  //       style: ElevatedButton.styleFrom(
-  //           shape: RoundedRectangleBorder(
-  //               borderRadius: BorderRadius.circular(30)
-  //           ),
-  //           primary: MyColors.primaryColor
-  //       ),
-  //     ),
-  //   );
-  //
-  // }
-
-
-
-  // Widget _buttonAcceptCreateCard() {
-  //
-  //   return Container(
-  //     height: 50,
-  //     width: double.infinity,
-  //     margin: EdgeInsets.symmetric( horizontal: 50),
-  //     child: ElevatedButton(
-  //       onPressed: (){
-  //         _con.cardsStore.length > 2?AwesomeDialog(
-  //           context: context,
-  //           dialogType: DialogType.ERROR,
-  //           animType: AnimType.BOTTOMSLIDE,
-  //           title: 'Solo puedes ingresar hasta 3 tarjetas elimina Una.',
-  //           desc: '',
-  //           btnOkOnPress: () {
-  //
-  //           },
-  //         ).show():Navigator.pushNamed(
-  //             context,
-  //             'client/payments/create');
-  //         ;
-  //       },
-  //       child: Text(
-  //           'Agregar Tarjeta'
-  //       ),
-  //       style: ElevatedButton.styleFrom(
-  //           shape: RoundedRectangleBorder(
-  //               borderRadius: BorderRadius.circular(30)
-  //           ),
-  //           primary: MyColors.primaryColor
-  //       ),
-  //     ),
-  //   );
-  //
-  //
-  // }
 
 //LIST ADRESS
   Widget _listAddress() {
@@ -182,27 +104,14 @@ class _ClientCarsListPageState extends State<ClientCarsListPage> {
 
               return Stack(
                   children: [ListView.builder(
+                    reverse: false,
                       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                       itemCount: snapshot.data?.length ?? 0,
                       itemBuilder: (_, index) {
                         return _radioSelectorAddress(snapshot.data[index], index);
                       }
                   ),
-                    // Container(
-                    //   margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.450),
-                    //
-                    //   child: _buttonAcceptCreateCard(),
-                    // ),
-                    // Container(
-                    //   margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.550),
-                    //
-                    //   child: _buttonAccept(),
-                    // ),
-                    // Container(
-                    //   margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.650),
-                    //
-                    //   child: _buttonAcceptCash(),
-                    // ),
+
                   ]
               );
 
@@ -322,11 +231,15 @@ class _ClientCarsListPageState extends State<ClientCarsListPage> {
                   Padding(
                     padding: const EdgeInsets.only(left: 18,bottom: 5),
                     child: CircleAvatar(
-                      backgroundImage: cars.color != null
-                          ? AssetImage('')
-                          : AssetImage('assets/img/car_color.png'),
-                      radius: 7,
-                      backgroundColor: Color(colorCar),
+                      radius: 8,
+                      backgroundColor: Colors.black,
+                      child: CircleAvatar(
+                        backgroundImage: cars.color != null
+                            ? AssetImage('')
+                            : AssetImage('assets/img/car_color.png'),
+                        radius: 7,
+                        backgroundColor: Color(colorCar),
+                      ),
                     ),
                   ),
                 ],
@@ -371,12 +284,28 @@ class _ClientCarsListPageState extends State<ClientCarsListPage> {
   Widget _textSelectAddress() {
     return Container(
       alignment: Alignment.centerLeft,
-      margin: EdgeInsets.symmetric(horizontal: 40, vertical: 30),
+      margin: EdgeInsets.symmetric(horizontal: 40, vertical: 40),
       child: Text(
         'Vehiculos en tu lista ',
         style: TextStyle(
             fontSize: 19,
+            fontFamily: 'Lexendeca-Black',
             fontWeight: FontWeight.bold
+        ),
+      ),
+    );
+  }
+
+  Widget _textSeleciion() {
+    return Container(
+      alignment: Alignment.centerLeft,
+      margin: EdgeInsets.symmetric(horizontal: 40, vertical: 80),
+      child: Text(
+        'Selecciona un vehiculo para eliminarlo',
+        style: TextStyle(
+          fontFamily: 'Lexendeca-Regular',
+            fontSize: 15,
+
         ),
       ),
     );
@@ -384,10 +313,62 @@ class _ClientCarsListPageState extends State<ClientCarsListPage> {
 
 
   Widget _iconAdd() {
-    return IconButton(
-        onPressed: _con.goToNewCard,
-        icon: Icon(Icons.add, color: Colors.white)
+
+    return Container(
+        margin: EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+            children: [
+              Row(
+                  children: [
+                    Text(
+                      'Agrega un vehiculo',
+                      style: TextStyle(
+                        fontFamily: 'Lexendeca-Regular',
+                        fontSize: 14,
+
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        IconButton(
+                            onPressed: _con.goToNewCard,
+                            icon: Icon(Icons.add, color: Colors.white)
+                        ),
+
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Regresar',
+                          style: TextStyle(
+                            fontFamily: 'Lexendeca-Regular',
+                            fontSize: 14,
+
+                          ),
+                        ),
+
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        IconButton(
+                            onPressed: _con.goBack,
+                            icon: Icon(Icons.arrow_back, color: Colors.white)
+                        ),
+
+                      ],
+                    ),
+                  ]
+
+              ),
+            ]
+        )
     );
+
   }
 
   void refresh() {

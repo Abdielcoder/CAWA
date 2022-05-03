@@ -145,7 +145,7 @@ class ClientCarCreateController {
       MySnackbar.show(context, responseApi.message);
 
       if (responseApi.success) {
-        MyDialog.show(context, 'Vehículo Agregado','Tu Informacion se cargo correctamente');
+        MyDialog.show(context, 'Vehículo Agregado','Tu Informacion se cargo correctamente','client/car/list');
         // Future.delayed(Duration(seconds: 3), () {
         //   Navigator.pushReplacementNamed(context, 'login');
         // });
