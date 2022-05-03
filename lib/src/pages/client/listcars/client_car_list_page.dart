@@ -147,7 +147,7 @@ class _ClientCarsListPageState extends State<ClientCarsListPage> {
               Radio(
                 value: index,
                 groupValue: _con.radioValue,
-                onChanged:_con.handleRadioValueChange,
+                onChanged:  _con.handleRadioValueChange,
 
               ),
               Column(
@@ -270,6 +270,14 @@ class _ClientCarsListPageState extends State<ClientCarsListPage> {
                   ),
                 ],
               ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+
+                      _iconDelete(cars)
+
+                ],
+              ),
 
             ],
           ),
@@ -310,7 +318,6 @@ class _ClientCarsListPageState extends State<ClientCarsListPage> {
       ),
     );
   }
-
 
   Widget _iconAdd() {
 
@@ -377,4 +384,15 @@ class _ClientCarsListPageState extends State<ClientCarsListPage> {
     });
 
   }
+
+  Widget _iconDelete(Car cars) {
+    return IconButton(
+        onPressed: () {
+          _con.deleteItem(cars);
+        },
+        icon: Icon(Icons.delete, color: MyColors.primaryColor,)
+    );
+  }
+
+
 }

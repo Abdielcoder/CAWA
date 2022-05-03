@@ -111,4 +111,36 @@ class CarProvider {
     }
   }
 
+  //DELETE CAR
+  Future<ResponseApi> deleteCar(String id) async {
+    try {
+      //FINAL URL
+      Uri url = Uri.http(_url, '$_api/delete/car/${id}');
+      //DATA FROM JSON OBJECT
+      //String bodyParams = json.encode(id);
+     // print("Body Param id delete car : ${bodyParams}");
+      //SEND HEADERS
+      Map<String, String> headers = {
+        'Content-type': 'application/json'
+      };
+      //SEND PETTITION
+      final res = await http.delete(url, headers: headers);
+      //VALIDATED SESSION TOKEN
+      if (res.statusCode == 401) {
+        MySnackbar.show(context, 'Sesion expirada');
+        new SharedPref().logout(context, sessionUser.id);
+      }
+
+      //GET RESPONSE DATA
+      final data = json.decode(res.body);
+      //VALIDATED RESPONSE
+      ResponseApi responseApi = ResponseApi.fromJson(data);
+      return responseApi;
+    }
+    catch(e) {
+      print('Error: $e');
+      return null;
+    }
+  }
+
 }

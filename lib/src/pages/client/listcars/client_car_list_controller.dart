@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:uber_clone_flutter/src/models/product.dart';
 import 'package:uber_clone_flutter/src/utils/shared_pref.dart';
@@ -27,6 +29,14 @@ class ClientCarListController {
   CarProvider _carProvider = new CarProvider();
   User user;
   int radioValue = 0;
+  String selectedValue;
+
+  void onSelected(String value) {
+    selectedValue = value;
+
+
+    print(selectedValue);
+  }
   Future init(BuildContext context, Function refresh) async {
     this.context = context;
     this.refresh = refresh;
@@ -48,7 +58,7 @@ class ClientCarListController {
     // }
 
     // print('SE GUARDO LA DIRECCION: ${a.toJson()}');
-    print('LO QUE TREA ADRESSESS  ${cars.toString()}');
+    print('LO QUE TREA CARS  ${cars.toString()}');
     return cars;
   }
   void getTotal() {
@@ -67,19 +77,17 @@ class ClientCarListController {
     getTotal();
   }
 
-  void removeItem(Product product) {
-    if (product.quantity > 1) {
-      int index = selectedProducts.indexWhere((p) => p.id == product.id);
-      selectedProducts[index].quantity = selectedProducts[index].quantity - 1;
-      _sharedPref.save('order', selectedProducts);
-      getTotal();
-    }
+  void removeItem(Car cars) {
+    // if (cars.quantity > 1) {
+    //   int index = selectedProducts.indexWhere((p) => p.id == product.id);
+    //   selectedProducts[index].quantity = selectedProducts[index].quantity - 1;
+    //   _sharedPref.save('order', selectedProducts);
+    //   getTotal();
+    // }
   }
 
-  void deleteItem(Product product) {
-    selectedProducts.removeWhere((p) => p.id == product.id);
-    _sharedPref.save('order', selectedProducts);
-    getTotal();
+  void deleteItem(Car cars) {
+    MyDialog.info(context, 'ELIMINAR','¿Quieres eliminar el Vehiculo?...','client/car/list',cars.id);
   }
 
   void goToAddress() {
@@ -107,7 +115,6 @@ class ClientCarListController {
   }
   void handleRadioValueChange(int value) async {
     radioValue = value;
-    MyDialog.info(context, 'ELIMINAR','¿Quieres eliminar el Vehiculo?...','client/car/list');
     refresh();
     print('Valor seleccioonado: $radioValue');
   }
